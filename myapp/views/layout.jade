@@ -6,7 +6,27 @@ html
     link(href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css', rel='stylesheet', media='screen')
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
+    header.container
+      .navbar
+        a.btn.btn-navbar(data-toggle='collapse', data-target='.nav-collapse')
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        hgroup.brand.pull-left
+            a(href='/')
+                img(src='/images/PostAlert_logo.jpg', alt='PostAlert')
+          
+        .nav-collapse
+          nav.mainnav.nav.btn-group.pull-right
+            block navbuttons
+              a.btn.btn-large(href='/') Status
+              a.btn.btn-large(href='/account') Account
+              a.btn.btn-large(href='/device') Devices
     block content
-
+    hr
+    .container
+      if (user)
+        p You are currently logged in as #{user.username}
+        a(href="/logout") Logout
   script(src='http://code.jquery.com/jquery.js')
   script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js')
