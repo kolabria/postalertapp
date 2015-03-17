@@ -108,7 +108,8 @@ client.on('message', function (topic, message) {
                     case 'door':
                         console.log("Received mqtt door message");
                         if (message == 'open'){
-                            sendTxtMessage(account.phoneNum,'Your Mailbox door has been opened');
+                            if (account.phoneNum)
+                              sendTxtMessage(account.phoneNum,'Your Mailbox door has been opened');
                             account.doorOpen = true;
                             account.save(function(err) {
                             	  if (err) console.log('failed to device door status',err);
@@ -124,7 +125,8 @@ client.on('message', function (topic, message) {
                     case 'mail':
                         console.log("Received mqtt mail message");
                         if (message == 'true'){
-                            sendTxtMessage(account.phoneNum,'Your Have Mail');
+                            if (account.phoneNum)
+                              sendTxtMessage(account.phoneNum,'Your Have Mail');
                             account.haveMail = true;
                             account.save(function(err) {
                             	  if (err) console.log('failed to device door status',err);
