@@ -159,7 +159,7 @@ client.on('message', function (topic, message) {
 });
 
 function sendTxtMessage(number, message){
-    var smsMsg = 'Sensor Mesage: ' + message;
+    var smsMsg = 'PostAlert Mesage: ' + message;
     number = '+1' + number;
           //Send an SMS text message
     smsClient.sendMessage({
