@@ -1,0 +1,17 @@
+
+Structure of MQTT topics and messages 
+    
+    mandatory Topic
+        /DID/'device id'/
+
+   /door
+   messages: open, close
+   
+   /mail
+   messages: true, false 
+   
+   /batteryLevel
+   messages: numeric voltage
+   
+   /batteryStatus
+   messages: OK, low

@@ -15,7 +15,13 @@ router.get('/account', ensureLoggedIn('/login'), function (req, res) {
 
 router.post('/account', ensureLoggedIn('/login'), function (req, res) {
     console.log("account: phone Number: ", req.body.phonenumber);
-    req.user.phoneNum = req.body.phonenumber;
+    var numArray = req.body.phonenumber.split("-");  // remove dashes if any
+    var newnum = '';
+    for (i=0; i < numArray.length; i++)
+         newnum = newnum + numArray[i];  
+    //console.log("new number: ",newnum);
+    
+    req.user.phoneNum = newnum;
     req.user.save(function(err) {
     	  if (err) console.log('failed to save number',err);
     	});
