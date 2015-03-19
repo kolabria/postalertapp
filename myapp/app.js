@@ -1,4 +1,5 @@
 var express = require('express');
+var socket_io = require("socket.io");
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -20,6 +21,10 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+// Socket.io
+var io = socket_io();
+app.io = io;
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -108,7 +113,7 @@ client.on('message', function (topic, message) {
                     case 'door':
                         console.log("Received mqtt door message");
                         if (message == 'open'){
-                            if (account.phoneNum)
+                            if (account.phoneNum != "")
                               sendTxtMessage(account.phoneNum,'Your Mailbox door has been opened');
                             account.doorOpen = true;
                             account.save(function(err) {
@@ -121,11 +126,12 @@ client.on('message', function (topic, message) {
                             	  if (err) console.log('failed to device door status',err);
                             	});
                         }
+                        io.emit(account.username, account);
                         break;
                     case 'mail':
                         console.log("Received mqtt mail message");
                         if (message == 'true'){
-                            if (account.phoneNum)
+                            if (account.phoneNum  != "")
                               sendTxtMessage(account.phoneNum,'Your Have Mail');
                             account.haveMail = true;
                             account.save(function(err) {
@@ -138,6 +144,7 @@ client.on('message', function (topic, message) {
                             	  if (err) console.log('failed to device door status',err);
                             	});
                         }
+                        io.emit(account.username, account);
                         break;                     
                     default:
                            console.log("Received unknown mqtt message");
@@ -184,6 +191,15 @@ function sendTxtMessage(number, message){
               }
           }); 
 }
+
+
+io.on('connection', function (socket) {
+    console.log('a user connected');    
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
+});
 
 
 

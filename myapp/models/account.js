@@ -8,7 +8,8 @@ var Account = new Schema({
     deviceID: String,
     phoneNum: String,
     doorOpen: Boolean,
-    haveMail: Boolean
+    haveMail: Boolean,
+    smsEnable: Boolean
 });
 
 Account.plugin(passportLocalMongoose);

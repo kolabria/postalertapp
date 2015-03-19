@@ -5,12 +5,31 @@ block content
   br
   br
   if (user.haveMail == true)
-   h4 You Have Mail
+   h4#mail You Have Mail
   else
-   h4 No Mail    
+   h4#mail No Mail    
   br 
   if (user.doorOpen == true)
-    h4 Door Open
+    h4#door Door Open
   else
-    h4 Door Closed
+    h4#door Door Closed
   br  
+  
+  script(src='/socket.io/socket.io.js')
+  script(src="http://code.jquery.com/jquery-1.11.1.js")
+  script.
+    var socket = io.connect('http://localhost');
+    socket.on('#{user.username}', function (data) {
+    //console.log(data);
+    if (data.doorOpen == true)
+      $("#door").text("Door Open")
+    else
+      $("#door").text("Door Closed")
+    if (data.haveMail == true)
+      $("#mail").text("You Have Mail")
+    else
+      $("#mail").text("No Mail")  
+      
+      
+    //socket.emit('my other event', { my: 'data' });
+    });
