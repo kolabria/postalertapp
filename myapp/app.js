@@ -113,7 +113,7 @@ client.on('message', function (topic, message) {
                     case 'door':
                         console.log("Received mqtt door message");
                         if (message == 'open'){
-                            if (account.phoneNum != "")
+                            if (account.phoneNum != "" && account.doorOpen == false)
                               sendTxtMessage(account.phoneNum,'Your Mailbox door has been opened');
                             account.doorOpen = true;
                             account.save(function(err) {
@@ -131,7 +131,7 @@ client.on('message', function (topic, message) {
                     case 'mail':
                         console.log("Received mqtt mail message");
                         if (message == 'true'){
-                            if (account.phoneNum  != "")
+                            if (account.phoneNum  != "" && account.haveMail == false)
                               sendTxtMessage(account.phoneNum,'Your Have Mail');
                             account.haveMail = true;
                             account.save(function(err) {
